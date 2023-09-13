@@ -1,4 +1,5 @@
-import  express  from "express";
+const express = require('express')
+
 const dep = express.Router();
 
 
@@ -6,4 +7,4 @@ const dep = express.Router();
 dep.get('/');
 
      
-export default dep;
+module.exports= dep;

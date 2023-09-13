@@ -1,4 +1,4 @@
-import express  from "express";
+const express = require('express')
 const home= express.Router();
 
 
@@ -12,4 +12,4 @@ home
      .patch("/:departamentID")
      .delete("/:departamentID")
 
-export default home;
+module.exports= home;

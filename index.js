@@ -1,11 +1,23 @@
-import express from "express";
-import router1 from "./src/routes/routes.js";
+const express = require('express')
+const router1 = require('./src/routes/routes');
+const {conn}= require('./src/db')
+require('dotenv').config();
+
 
 const app= express();
-
-app.use('/',router1);
+const PORT= 3000;
+const bodyParser = require("body-parser");
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(express.json());
 
-app.listen(3000,()=>{
-    console.log("port 3000");
-})
+app.use('/',router1);
+
+
+
+
+conn.sync({ force:false }).then(() => {
+    app.listen(PORT,()=>{
+        console.log(`Server listen on port ${PORT}`);
+    });
+  });
