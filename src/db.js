@@ -34,7 +34,28 @@ let entries = Object.entries(sequelize.models);
 let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { Users } = sequelize.models;
+const { Users,Contenido,Ideas,Investigaciones,Proyects,Tasks} = sequelize.models;
+
+//creamos la relacion muchos a muchos de Proyecto Usuarios
+Users.belongsToMany(Proyects, { through: 'UsuarioProyecto' });
+Proyects.belongsToMany(Users,{through: 'UsuarioProyecto'});
+
+//Creamos la relacion de una a muchos de  ideas a proyecto
+Proyects.hasMany(Ideas);
+Ideas.belongsTo(Proyects);
+
+//Creamos la relacion de una a muchos de muchas investigaciones aun proyecto
+Proyects.hasMany(Investigaciones);
+Investigaciones.belongsTo(Proyects);
+
+//Creamos la relacion de muchos contenidos a un proyecto
+Proyects.hasMany(Contenido);
+Contenido.belongsTo(Proyects);
+
+//Creamos la relacion de muchas tareas a un contenido
+Contenido.hasMany(Tasks);
+Tasks.belongsTo(Contenido);
+
 
 module.exports = {
     ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
